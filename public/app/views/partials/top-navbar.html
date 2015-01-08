@@ -1,0 +1,85 @@
+<!-- START Top Navbar-->
+<nav role="navigation" data-ng-controller="HeaderNavController" class="navbar topnavbar">
+   <!-- START navbar header-->
+   <div data-ng-class="app.theme.brand" class="navbar-header">
+      <a ui-sref="app.dashboard" class="navbar-brand">
+         {{app.name}}
+      </a>
+      <!-- Mobile buttons-->
+      <div class="mobile-toggles">
+         <!-- Button to show/hide the header menu on mobile. Visible on mobile only.-->
+         <a href="#" toggle-state="hmenu-toggled" no-persist="no-persist" data-ng-click="toggleHeaderMenu()" class="menu-toggle">
+            <em class="fa fa-cog"></em>
+         </a>
+         <!-- Button to show/hide the sidebar on mobile. Visible on mobile only.-->
+         <a href="#" toggle-state="aside-toggled" no-persist="no-persist" class="sidebar-toggle">
+            <em class="fa fa-navicon"></em>
+         </a>
+      </div>
+   </div>
+   <!-- END navbar header-->
+   <!-- START Nav wrapper-->
+   <div collapse="headerMenuCollapsed" class="nav-wrapper collapse navbar-collapse">
+      <!-- START Left navbar-->
+      <ul class="nav navbar-nav">
+         <li>
+            <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
+            <a href="#" data-ng-click="app.sidebar.isCollapsed = !app.sidebar.isCollapsed" class="hidden-xs">
+               <em data-ng-class="app.sidebar.isCollapsed ? 'fa-caret-right':'fa-caret-left'" class="fa"></em>
+            </a>
+         </li>
+      </ul>
+      <!-- END Left navbar-->
+      <!-- START Top navbar search form-->
+      <form role="search" class="search-form navbar-form navbar-left">
+         <toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+         <div class="form-group">
+            <div data-ng-controller="SearchFormController" class="input-group">
+               <span class="input-group-addon">
+                  <em class="icon-search"></em>
+               </span>
+               <textarea 
+                      rows="1" 
+                      data-ng-model="searchValue"
+                      typeahead="posts.title for posts in getPosts($viewValue) | filter:$viewValue | limitTo:8" 
+                      placeholder="{{ 'topbar.search.PLACEHOLDER' | translate }}" 
+                      typeahead-on-select="onPostSelect($item, $model, $label)"
+                      class="search form-control"></textarea>
+            </div>
+         </div>
+         <button type="submit" class="hidden btn btn-default">Submit</button>
+      </form>
+      <!-- END Top navbar search form-->
+      <!-- START Right Navbar-->
+      <ul class="nav navbar-nav navbar-right">
+         <!-- Fullscreen (only desktops)-->
+         <li class="visible-lg">
+            <a href="#" toggle-fullscreen="toggle-fullscreen">
+               <em class="fa fa-expand"></em>
+            </a>
+         </li>
+         <li>
+             <a href="#" ng-click="showAdvanceSearch()">
+               <em class="fa fa-cog"></em>
+             </a>
+         </li>
+         <!-- END Alert menu-->
+          <li>
+            <a ng-show="user.loggedin == false" href="#" title="Register">
+               <em class="fa fa-user"></em>
+               <span class="visible-xs-inline ml">Register</span>
+            </a>
+         </li>
+         <li>
+            <a ng-show="user.loggedin == false" href="#" ng-click="open()" title="Login">
+               <em class="fa fa-sign-in"></em>
+               <span class="visible-xs-inline ml">Login</span>
+            </a>
+         </li>
+      </ul>
+      <!-- END Right Navbar-->
+   </div>
+   <!-- END Nav wrapper-->
+
+</nav>
+<!-- END Top Navbar-->

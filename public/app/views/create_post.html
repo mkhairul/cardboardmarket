@@ -1,0 +1,99 @@
+<!-- START row-->
+<div data-ng-controller="FormValidationController as form" class="row">
+   <div class="col-md-12">
+         <!-- START panel-->
+         <div class="panel panel-default">
+            <div class="panel-heading">
+               <div class="panel-title">Create Post</div>
+            </div>
+            <div class="panel-body">
+                
+                <form name="search" class="form-validate form-horizontal" ng-submit="searchCard(keyword)">
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Search Card</label>
+                            <div class="col-sm-6">
+                                <input type="text" ng-focus="" ng-model="keyword" class="form-control" placeholder="example: Elspeth" />
+                            </div>
+                            <div class="col-sm-4">
+                                <button type="button" class="mr mb-sm btn btn-primary" ng-click="searchCard(keyword)">Search</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+               
+                <form name="formv" class="form-validate form-horizontal" ng-submit="savePost()">
+                    <fieldset ng-repeat="card in selected_cards">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                <a href="#" class="btn btn-xs btn-danger remove-card" ng-click="removeCard(card)" >
+                                    <i class="fa fa-remove"></i>
+                                    <small>remove</small>
+                                </a>
+                                {{card.name}} ({{card.set}})
+                            </label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <select name="condition" 
+                                                required="" 
+                                                ng-options="options.name for options in condition_options" 
+                                                class="form-control m-b" 
+                                                ng-init="card.condition = condition_options[0]" 
+                                                ng-model="card.condition">
+                                        </select>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-12">
+                                        <input type="text" ng-model="card.quantity" required="" masked="integer" placeholder="Quantity" value="" class="form-control" title="Card Quantity">
+                                    </div>
+                                    <div class="col-md-4 col-sm-12">
+                                        <input type="text" ng-model="card.price" required="" masked="currency" placeholder="Card Price" value="0.00" class="form-control" title="Card Price">
+                                        <span class="help-block">price per item</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                      <div class="form-group">
+                         <label class="col-sm-2 control-label">Post Title</label>
+                         <div class="col-sm-6">
+                            <input type="text" ng-model="post.title" required="" class="form-control" value="{{post.title}}" placeholder="Your Post Title" />
+                         </div>
+                      </div>
+                      <br/>
+                      <div class="form-group">
+                         <label class="col-sm-2 control-label">Short Message</label>
+                         <div class="col-sm-6">
+                            <input type="text" ng-model="post.content" required="" class="form-control" value="{{post.content}}" placeholder="Short description about your post" />
+                         </div>
+                      </div>
+                      <br/>
+                      <div class="form-group">
+                         <label class="col-sm-2 control-label">Email</label>
+                         <div class="col-sm-6">
+                            <input type="text" ng-model="post.email" required="" masked="email" required="" class="form-control" value="{{post.email}}" placeholder="Your Email" />
+                         </div>
+                      </div>
+                   </fieldset>
+                </form>
+            </div>
+            <div class="panel-footer text-center">
+               <div ng-show="no_cards == true" class="alert ng-isolate-scope alert-danger alert-dismissable" role="alert" type="danger" close="closeAlert($index)">
+                    <button ng-show="closeable" type="button" class="close" ng-click="close()">
+                        <span aria-hidden="true">×</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <div><span class="ng-binding ng-scope">Add cards to your post.</span></div>
+               </div>
+               <button type="submit" class="btn btn-info" ng-click="savePost()">Save</button>
+            </div>
+         </div>
+         <!-- END panel-->
+   </div>
+</div>
+<!-- END row-->

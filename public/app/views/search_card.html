@@ -1,0 +1,27 @@
+<div ng-show="searching" class="loading-container">
+    <h3>
+        <i class="fa fa-spinner fa-spin"></i>Searching card
+    </h3>
+</div>
+<div ng-show="result == 0 && searching == false" class="loading-container">
+    <h3>
+        <i class="fa fa-warning"></i>Card not found
+    </h3>
+</div>
+<div ng-show="result">
+    <h3>Select a card to add to your post</h3>
+    <div class="panel panel-default">  
+      <table class="searched_card table table-bordered table-striped">
+         <tbody>
+             <tr data-ng-repeat="card in $data" title="Click to select" ng-click="selectCard(card)">
+                 <td data-title="'Name'" sortable="'name'">
+                     <a popover-html="<strong>woot</strong>" popover-trigger="mouseenter" href="#">
+                        {{card.name}}
+                     </a>
+                 </td>
+                 <td data-title="'Set'" sortable="'set'">{{card.set}}</td>
+             </tr>
+         </tbody>
+      </table>
+    </div>
+</div>

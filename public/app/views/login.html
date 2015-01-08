@@ -1,0 +1,48 @@
+<div class="center-block mt-xl wd-xl">
+   <!-- START panel-->
+   <div class="panel panel-inverse">
+      <div class="panel-heading logo text-center">
+          {{app.name}}
+      </div>
+      <div data-ng-show="processing" class="text-center loading-container">
+        <h3>
+            <i class="fa fa-spinner fa-spin"></i>Loading
+        </h3>
+      </div>
+      <div class="panel-body" data-ng-hide="processing">
+         <p class="text-center pv text-bold">LOGIN</p>
+         <div data-ng-show="loginAlert" class="alert ng-isolate-scope alert-danger alert-dismissable">
+            <button type="button" class="close" ng-click="closeAlert('loginAlert')">
+                <span aria-hidden="true">×</span>
+                <span class="sr-only">Close</span>
+            </button>
+            <div><span class="ng-binding ng-scope">Error logging in.</span></div>
+         </div>
+         <form name="loginform" role="form" class="mb-lg" data-ng-submit="login()">
+            <div class="form-group has-feedback">
+               <input data-ng-model="user.username" id="exampleInputEmail1" type="email" placeholder="Your email" autocomplete="off" class="form-control" />
+               <span class="fa fa-envelope form-control-feedback text-muted"></span>
+            </div>
+            <div class="form-group has-feedback">
+               <input data-ng-model="user.password" id="exampleInputPassword1" type="password" placeholder="Your password" class="form-control" />
+               <span class="fa fa-lock form-control-feedback text-muted"></span>
+            </div>
+            <div class="checkbox c-checkbox pull-left mt0">
+               <label>
+                  <input type="checkbox" value="" />
+                  <span class="fa fa-check"></span>Remember me</label>
+            </div>
+            <br/>
+            <button type="submit" class="btn btn-block btn-info mt-lg">Login</button>
+         </form>
+         <p class="text-center text-muted">Or</p>
+         <a ng-click="registerpage()" class="btn btn-block btn-default">
+            <strong>Register an Account</strong>
+         </a>
+      </div>
+   </div>
+   <div class="text-center mt"><a ui-sref="page.recover" class="text-muted">Forgot your password?</a>
+   </div>
+   <!-- END panel-->
+   <div data-ng-include="'app/pages/page-footer.html'" class="p-lg text-center"></div>
+</div>

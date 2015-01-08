@@ -1,0 +1,125 @@
+<div data-ng-controller="DashboardController" class="row">
+   <!-- START dashboard content-->
+   <div class="fw-boxed col-lg-12">
+       <div class="row">
+          <div class="col-md-12 actions" data-ng-hide="loggedIn">
+              <button type="button" class="mr mb-sm btn btn-primary btn-sm" ng-click="registerpage()">Sign-up</button>
+              <button type="button" class="mr mb-sm btn btn-primary btn-sm" ng-click="loginpage()">Login</button>
+          </div>
+           <div class="col-md-12 actions" data-ng-show="loggedIn">
+              <button type="button" class="mr mb-sm btn btn-primary btn-sm" ng-click="logout()">Logout</button>
+          </div>
+       </div>    
+   </div>
+    
+   <div ng-class="{'col-lg-9':sidebar, 'col-lg-12':!sidebar}" class="fw-boxed">
+      <div class="row">        
+        <div class="col-md-12 posts advancedSearch ng-hide animated fadeInLeft" ng-show="checked">
+            <div class="panel panel-default">
+               <div class="panel-heading">
+                  <div class="panel-title">Advance Search</div>
+               </div>
+               
+            </div>
+         </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-md-12 posts">
+            <div class="panel panel-default">
+               <div class="panel-heading">
+                  <button type="button" class="help-btn mr btn btn-labeled btn-info btn-sm pull-right" ng-click="help('post')">
+                    <span class="btn-label"><i class="fa fa-question"></i></span>Help
+                  </button>
+                  <div class="panel-title">Posts</div>
+               </div>
+                
+               <div ng-hide="posts" class="text-center loading-container">
+                   <h3>
+                        <i class="fa fa-spinner fa-spin"></i>Loading
+                   </h3>
+                   <br/>
+               </div>
+               <!-- List group -->
+               <ul class="list-group">
+                  <li id="{{post.id}}" ng-repeat="post in posts" class="list-group-item" ng-click="onPostSelect(post)" on-finish-render="" title="{{(post.verify==1) ? 'Verified':'Unverified'}} User Post">
+                     <div class="media">
+                        <div class="pull-left">
+                           <!-- Contact avatar-->
+                           <div class="point-pin">
+                              <a href="#">
+                                 <img src="http://www.gravatar.com/avatar/{{md5(post.email)}}" alt="Image" class="media-object img-circle thumb32" />
+                              </a>
+                              <div data-ng-class="{'point-success':(post.verify==1), 'point-danger':(post.verify==0)}" class="verification point point-lg"></div>
+                           </div>
+                        </div>
+                        
+                        <!-- post time -->
+                        <div class="pull-right">
+                            <span am-time-ago="{{post.created}}"></span>
+                        </div>
+                         
+                        <!-- Contact info-->
+                        <div class="media-body">
+                           <div class="media-heading">
+                              <p class="post-title mb-sm">
+                                 <strong><a href="#" class="text-inverse">{{post.title}}</a>
+                                 </strong>-
+                                 <em class="text-muted">{{post.email}}</em>
+                              </p>
+                              <p class="post-content">{{post.content}}</p>
+                              <small ng-repeat="card in displayCards(post.cards)" class="card-list text-muted">{{card}}{{$last ? '':', '}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- END dashboard content-->
+   <!-- START dashboard sidebar-->
+   <aside ng-show="sidebar" class="col-lg-3 fw-boxed">
+      <div class="row">
+         <div class="col-lg-12 col-md-6 news">
+            <div class="panel panel-info">
+               <div class="panel-heading">
+                  <div class="panel-title bg-info">
+                     <em class="icon-clock fa-lg pull-right text-muted"></em>News</div>
+               </div>
+               <ul class="list-group">
+                  <li class="list-group-item">
+                     <div class="media">
+                        <a href="#" class="media-left media-middle text-muted">
+                           <em class="fa fa-cloud-upload fa-2x"></em>
+                        </a>
+                        <div class="media-body">
+                           <p class="media-heading text-bold">wonderful-sunday.png</p>
+                           <p>10 of 300MB - 10MB/s</p>
+                           <progressbar value="32" type="warning" class="progress-xs"></progressbar>
+                        </div>
+                     </div>
+                  </li>
+                  <li class="list-group-item">
+                     <div class="media">
+                        <a href="#" class="media-left media-middle text-muted">
+                           <em class="fa fa-check fa-2x text-success"></em>
+                        </a>
+                        <div class="media-body">
+                           <p class="media-heading text-bold">Angular-directives-complete-set.zip</p>
+                           <p>500k of 500k -
+                              <a href="#">
+                                 <em class="text-primary fa fa-dropbox"></em>
+                              </a>
+                           </p>
+                           <progressbar value="100" type="success" class="progress-xs"></progressbar>
+                        </div>
+                     </div>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </div>
+   </aside>
+</div>

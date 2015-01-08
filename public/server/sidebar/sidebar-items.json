@@ -1,0 +1,24 @@
+[
+  {
+    "text": "Main Navigation",
+    "type": "heading",
+    "translate": "sidebar.heading.HEADER"
+  },
+  {
+    "text": "Dashboard",
+    "sref": "app.dashboard",
+    "icon": "icon-bar-graph",
+    "translate": "sidebar.nav.DASHBOARD",
+    "alert": {"text":"3", "class": "label-info"}
+  },
+  {
+    "text": "Create Post",
+    "sref": "app.create_post",
+    "icon": "icon-square-plus",
+    "translate": "sidebar.nav.CREATEPOST",
+    "alert": {"text":"3", "class": "label-info"}
+  },
+  {
+    "type": "separator"
+  }
+]

@@ -1,0 +1,17 @@
+<h3>View title
+   <button type="button" class="pull-right btn btn-primary">Action button</button>
+   <small>View subline</small>
+</h3>
+
+<div class="card-container animated fadeIn" ng-repeat="card in post.cards">
+    <div style="width: 150px; float: left;">
+        <div class="card" style="border-radius: 15px 15px 0 0">
+            <img src="http://mtgimage.com/card/{{card.name}}.jpg" style="width:100%;">
+        </div>
+    </div>
+</div>
+<div class="row">
+   <div class="col-lg-12">
+      <p class="lead text-center">View content</p>
+   </div>
+</div>

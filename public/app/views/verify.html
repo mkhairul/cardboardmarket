@@ -1,0 +1,16 @@
+<div ng-show="verifying" class="text-center loading-container">
+    <h3>
+        <i class="fa fa-spinner fa-spin"></i>Verifying
+    </h3>
+</div>
+
+<div ng-show="verified == true" class="text-center loading-container">
+    <h3>
+        {{post.title}} is verified.
+    </h3>
+</div>
+<div ng-show="verified == false" class="text-center loading-container">
+    <h3>
+        Unable to verify.
+    </h3>
+</div>

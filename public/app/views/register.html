@@ -1,0 +1,51 @@
+<div class="center-block mt-xl wd-xl">
+   <!-- START panel-->
+   <div class="panel panel-inverse">
+      <div class="panel-heading logo text-center">
+          {{app.name}}
+      </div>
+      <div data-ng-show="processing" class="text-center loading-container">
+        <h3>
+            <i class="fa fa-spinner fa-spin"></i>{{(status) ? status:'Loading'}}
+        </h3>
+      </div>
+      <div class="panel-body" data-ng-hide="processing">
+         <p class="text-center pv text-bold">REGISTER</p>
+         <div data-ng-show="registerAlert" class="alert ng-isolate-scope alert-danger alert-dismissable">
+            <button type="button" class="close" ng-click="closeAlert('registerAlert')">
+                <span aria-hidden="true">×</span>
+                <span class="sr-only">Close</span>
+            </button>
+            <div><span class="ng-binding ng-scope">Error: {{error.message}}</span></div>
+         </div>
+         <form name="registerform" role="form" class="mb-lg" data-ng-submit="register()">
+            <div class="form-group has-feedback">
+               <input data-ng-model="user.username" id="reg_username" type="email" placeholder="Your email" autocomplete="off" class="form-control" required="" />
+               <span class="fa fa-envelope form-control-feedback text-muted"></span>
+            </div>
+            <div class="form-group has-feedback">
+               <input data-ng-model="user.password" id="reg_password" type="password" placeholder="Your password" class="form-control" required="" />
+               <span class="fa fa-lock form-control-feedback text-muted"></span>
+            </div>
+            <div class="form-group has-feedback">
+               <input id="reg_confirm_password" type="password" placeholder="Confirm your password" class="form-control" required="" data-ng-match="user.password" />
+               <span class="fa fa-lock form-control-feedback text-muted"></span>
+            </div>
+            <div class="checkbox c-checkbox pull-left mt0">
+               <label>
+                  <input type="checkbox" value="" />
+                  <span class="fa fa-check"></span>Remember me</label>
+            </div>
+            <br/>
+            <button type="submit" class="btn btn-block btn-info mt-lg">Sign-up</button>
+         </form>
+         <p class="text-center text-muted">Or</p>
+         <a ng-click="loginpage()" class="btn btn-block btn-default">
+            <strong>Login</strong>
+         </a>
+      </div>
+   </div>
+   </div>
+   <!-- END panel-->
+   <div data-ng-include="'app/pages/page-footer.html'" class="p-lg text-center"></div>
+</div>

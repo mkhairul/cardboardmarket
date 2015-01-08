@@ -1,0 +1,10 @@
+<div ng-show="processing" class="text-center loading-container">
+    <h3>
+        <i class="fa fa-spinner fa-spin"></i>Processing
+    </h3>
+    <ul class="list-unstyled">
+        <li ng-repeat="keyword in searchKeyword.data">
+            {{keyword[0]}}
+        </li>
+    </ul>
+</div>
