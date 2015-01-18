@@ -42,9 +42,7 @@
                       data-ng-paste="onPaste('')"
                       rows="1" 
                       data-ng-model="searchValue"
-                      typeahead="posts.title for posts in getPosts($viewValue) | filter:$viewValue | limitTo:8" 
                       placeholder="{{ 'topbar.search.PLACEHOLDER' | translate }}" 
-                      typeahead-on-select="onPostSelect($item, $model, $label)"
                       class="search form-control"></textarea>
             </div>
          </div>
