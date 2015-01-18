@@ -1,0 +1,188 @@
+<!-- START panel-->
+<div class="panel panel-default">
+   <div class="panel-heading">Create Post</div>
+   <div class="panel-body">
+      <div data-ng-init="activeStep = (activeStep) ? activeStep:1" class="wizard">
+         <ul class="steps-bar">
+            <li data-ng-class="{'active':activeStep&gt;=1}">
+               <span ng-show="loggedIn == false">Create account</span>
+               <span ng-show="loggedIn == true">Create account (SKIP)</span> 
+            </li>
+            <li data-ng-class="{'active':activeStep&gt;=2}">
+               <span>Add product</span>
+            </li>
+            <li data-ng-class="{'active':activeStep&gt;=3}">
+               <span>Create your post</span>
+            </li>
+         </ul>
+         <div data-ng-show="activeStep==1" class="wizard-step">
+            <h4>Create Account
+               <small>&mdash; Step 1</small>
+            </h4>
+            <form name="form_step1" class="form-validate">
+               <p>Email:</p>
+               <input type="email" placeholder="mail@example.com" name="email" data-ng-model="email" required="required" class="form-control" />
+               <p class="mt">Password</p>
+               <div class="row">
+                  <div class="col-xs-6">
+                     <input id="id-source" type="password" placeholder="Type your password" data-ng-model="form.match1" class="form-control" />
+                  </div>
+                  <div class="col-xs-6">
+                     <input type="password" placeholder="Retype your password" name="confirm_match" data-parsley-equalto="#id-source" required="" data-ng-model="form.match2" ui-validate="'$value==form.match1'" ui-validate-watch="'validator.match1'" class="form-control"
+                     />
+                  </div>
+               </div>
+               <p data-ng-show="form_step1.confirm_match.$error.validator" class="text-danger">Password do not match!</p>
+               <div class="mt">
+                  <button type="submit" data-ng-disabled="form_step1.$invalid" data-ng-click="activeStep=2" class="btn btn-primary">Next</button>
+               </div>
+            </form>
+         </div>
+         <div data-ng-show="activeStep==2" class="wizard-step">
+            <h4>Add your products
+               <small>&mdash; Step 2</small>
+            </h4>
+            <form name="search" class="search-card form-validate form-horizontal" ng-submit="searchCard(keyword)">
+                <fieldset>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Currency</label>
+                        <div class="col-sm-6">
+                            <select name="currency" 
+                                    required="" 
+                                    ng-options="(currency.name + ' ('+currency.code+')') for currency in currency_list" 
+                                    class="form-control m-b" 
+                                    ng-init="post.currency = currency_list[1]" 
+                                    ng-model="post.currency"></select>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Search Card to Add</label>
+                        <div class="col-sm-6" ng-paste="console.log('Pasting!')">
+                            <input 
+                                   type="text" 
+                                   ng-focus="" 
+                                   ng-model="keyword" 
+                                   class="form-control"
+                                   typeahead-min-length="3"
+                                   typeahead-wait-ms="500"
+                                   typeahead="cards.title for cards in searchCardAuto($viewValue) | filter:$viewValue | limitTo:8" 
+                                   typeahead-on-select="selectCard($item)"
+                                   placeholder="example: Elspeth" />
+                        </div>
+                        <div class="col-sm-4">
+                            <button type="button" class="mr mb-sm btn btn-primary" ng-click="searchCard(keyword)">Search</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+
+            <form name="form_step2" class="form-validate form-horizontal">
+                <fieldset ng-repeat="card in selected_cards">
+                        <div class="form-group" ng-init="retrievePrice(card)">
+                            <label class="col-sm-2 control-label">
+                                <div>
+                                    <a href="#" class="btn btn-xs btn-danger remove-card" ng-click="removeCard(card)" >
+                                        <i class="fa fa-remove"></i>
+                                        <small>remove</small>
+                                    </a>
+                                </div>
+                                <div class="item-image" >
+                                    <a data-ng-href="" data-back-img="http://mtgimage.com/multiverseid/{{card.multiverseid}}.jpg"></a>
+                                </div>
+                                <div class="item-image-desc">{{card.name}} ({{card.set}})</div>
+                            </label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <select name="condition" 
+                                                required="" 
+                                                ng-options="options.name for options in condition_options" 
+                                                class="form-control m-b" 
+                                                ng-init="card.condition = condition_options[0]" 
+                                                ng-model="card.condition">
+                                        </select>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="checkbox c-checkbox">
+                                    <label>
+                                       <input ng-model="card.foil" type="checkbox" checked="" value="1" />
+                                       <span class="fa fa-check"></span>Foil
+                                    </label>
+                                </div>
+                                <br/>
+                                <div class="radio c-radio">
+                                    <label>
+                                       <input ng-change="card.price = 0.00" ng-model="card.price_type" id="inlineradio1" type="radio" name="price_type" value="custom">
+                                       <span class="fa fa-circle"></span>Custom Price</label>
+                                </div>
+                                <div class="radio c-radio">
+                                    <label>
+                                       <input ng-model="card.price_type" id="inlineradio1" type="radio" name="price_type" value="tcg">
+                                       <span class="fa fa-circle"></span>TCG Player Price ({{(card.price_tcg) ? card.price_tcg:'retrieving'}})</label>
+                                </div>
+                                <div class="radio c-radio">
+                                    <label>
+                                       <input ng-change="priceType(card)" ng-model="card.price_type" id="inlineradio1" type="radio" name="price_type" value="cf">
+                                       <span class="fa fa-circle"></span>Channel Fireball Price ({{(card.price_cf) ? card.price_cf:'retrieving'}})</label>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-12">
+                                        <input type="text" ng-model="card.quantity" required="" masked="integer" placeholder="Quantity" value="" class="form-control" title="Card Quantity">
+                                    </div>
+                                    <div class="col-md-4 col-sm-12">
+                                        <input type="text" ng-model="card.price" required="" masked="currency" placeholder="Card Price" value="0.00" class="form-control" title="Card Price">
+                                        <span class="help-block">price per item</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                <div class="mt wizard-actions">
+                  <button type="button" data-ng-click="activeStep=1" class="btn btn-default">Prev</button>
+                  <button type="submit" data-ng-disabled="(selected_cards == undefined || selected_cards.length == 0) || form_step2.$invalid" data-ng-click="activeStep=3" class="btn btn-primary">Next</button>
+                </div>
+              </form>
+         </div>
+         <div data-ng-show="activeStep==3" class="wizard-step">
+            <h4>Create your post
+               <small>&mdash; Step 3</small>
+            </h4>
+            <form name="form_step3" class="form-horizontal form-validate">
+               <fieldset>
+                      <div class="form-group">
+                         <label class="col-sm-2 control-label">Post Title</label>
+                         <div class="col-sm-6">
+                            <input type="text" ng-model="post.title" required="" class="form-control" value="{{post.title}}" placeholder="Your Post Title" />
+                         </div>
+                      </div>
+                      <br/>
+                      <div class="form-group">
+                         <label class="col-sm-2 control-label">Short Message</label>
+                         <div class="col-sm-6">
+                            <input type="text" ng-model="post.content" required="" class="form-control" value="{{post.content}}" placeholder="Short description about your post" />
+                         </div>
+                      </div>
+                      <br/>
+                      <div class="form-group">
+                         <label class="col-sm-2 control-label">Email</label>
+                         <div class="col-sm-6">
+                            <input type="text" ng-model="post.email" required="" masked="email" required="" class="form-control" value="{{post.email}}" placeholder="Your Email" />
+                         </div>
+                      </div>
+                </fieldset>
+            </form>
+            <div data-ng-show="stepsDone" class="alert alert-success mv-lg">
+               <p class="text-bold m0">Excellent ! You've completed all steps.</p>
+            </div>
+            <div class="mt">
+               <button type="button" data-ng-click="activeStep=2" class="btn btn-default">Prev</button>
+               <button type="button" data-ng-disabled="form_step3.$invalid" data-ng-click="stepsDone=true && savePost()" class="btn btn-primary">Finish</button>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

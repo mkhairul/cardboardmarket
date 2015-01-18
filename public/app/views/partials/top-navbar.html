@@ -39,6 +39,7 @@
                   <em class="icon-search"></em>
                </span>
                <textarea 
+                      data-ng-paste="onPaste('')"
                       rows="1" 
                       data-ng-model="searchValue"
                       typeahead="posts.title for posts in getPosts($viewValue) | filter:$viewValue | limitTo:8" 

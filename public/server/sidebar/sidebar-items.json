@@ -15,8 +15,7 @@
     "text": "Create Post",
     "sref": "app.create_post",
     "icon": "icon-square-plus",
-    "translate": "sidebar.nav.CREATEPOST",
-    "alert": {"text":"3", "class": "label-info"}
+    "translate": "sidebar.nav.CREATEPOST"
   },
   {
     "type": "separator"

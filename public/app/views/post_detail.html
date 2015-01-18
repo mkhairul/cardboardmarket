@@ -1,34 +1,39 @@
 <div class="detail panel panel-default">
     <div class="panel-heading">
-        <button type="button" class="mr btn btn-labeled btn-info btn-sm pull-right" ng-click="help('post')">
-            <span class="btn-label"><i class="fa fa-question"></i></span>Help
-        </button>
-        <h1>{{post.title}}</h1>
+        <div class="pull-right">
+            <button type="button" class="mr btn btn-labeled btn-info btn-sm" ng-click="help('post')">
+                <span class="btn-label"><i class="fa fa-question"></i></span>Help
+            </button>
+        </div>
+        <div class="pull-right social-plugin">
+            <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>
+            <div class="fb-share-button" data-href="http://cardboardmarket.com" data-type="button_count"></div>
+        </div>
+        <h1 class="post-title">{{post.title}}</h1>
         <small>{{post.email}}</small>
     </div>
     <div class="panel-body">
         <p>{{post.content}}</p>
         <div class="table-responsive">
-           <table class="card-list table table-striped table-bordered table-hover">
-              <tbody>
-                 <tr ng-repeat="card in post.cards">
-                    <td>
-                       <div class="media">
-                          <a href="#" class="media-left media-middle">
-                             <img src="http://mtgimage.com/card/{{card.name}}.jpg" alt="" class="thumb48 media-object img-responsive img-circle">
-                          </a>
-                          <div class="media-body">
-                             <h4 class="media-heading">{{card.name}}</h4>
-                             <span class="text-muted">Quantity: {{card.quantity}}, Price: {{money(card.price)}}/each</span>
-                          </div>
-                       </div>
-                    </td>
-                    <td class="text-center">
-                       
-                    </td>
-                 </tr>
-              </tbody>
-           </table>
+            <div id="wrapper">
+                <div id="columns">
+                    <div class="pin" data-ng-repeat="card in post.cards" title="{{card.name}}">
+                        <img data-ng-src="http://mtgimage.com/card/{{card.name}}.jpg" alt="" class="media-object img-responsive">
+                        <h4 class="media-heading">{{card.name}}</h4>
+                        <div class="info">
+                            <div><strong>Quantity:</strong> {{card.quantity}}</div>
+                            <div><strong>Price:</strong> {{money(card.price)}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="disqus_thread"></div>
+            <dir-disqus data-ng-if="post.title" 
+                        disqus-shortname="cardboardmarket" 
+                        disqus-title={{post.title}} 
+                        disqus-identifier="{{path}}" 
+                        disqus-url="{{path}}" 
+                        readytobind="true"></dir-disqus>
         </div>
     </div>
 </div>
