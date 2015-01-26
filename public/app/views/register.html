@@ -16,7 +16,7 @@
                 <span aria-hidden="true">×</span>
                 <span class="sr-only">Close</span>
             </button>
-            <div><span class="ng-binding ng-scope">Error: {{error.message}}</span></div>
+            <div><span class="ng-binding ng-scope">{{error.message}}</span></div>
          </div>
          <form name="registerform" role="form" class="mb-lg" data-ng-submit="register()">
             <div class="form-group has-feedback">
@@ -30,11 +30,6 @@
             <div class="form-group has-feedback">
                <input id="reg_confirm_password" type="password" placeholder="Confirm your password" class="form-control" required="" data-ng-match="user.password" />
                <span class="fa fa-lock form-control-feedback text-muted"></span>
-            </div>
-            <div class="checkbox c-checkbox pull-left mt0">
-               <label>
-                  <input type="checkbox" value="" />
-                  <span class="fa fa-check"></span>Remember me</label>
             </div>
             <br/>
             <button type="submit" class="btn btn-block btn-info mt-lg">Sign-up</button>

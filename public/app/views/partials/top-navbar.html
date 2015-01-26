@@ -39,7 +39,8 @@
                   <em class="icon-search"></em>
                </span>
                <textarea 
-                      data-ng-paste="onPaste('')"
+                      data-ng-enter="searchCardOrPost(searchValue)" 
+                      data-ng-paste="onPaste($event.originalEvent)"
                       rows="1" 
                       data-ng-model="searchValue"
                       placeholder="{{ 'topbar.search.PLACEHOLDER' | translate }}" 
@@ -53,6 +54,11 @@
       <ul class="nav navbar-nav navbar-right">
          <!-- Fullscreen (only desktops)-->
          <li class="visible-lg">
+            <a href="#">
+               <em class="fa fa-expand"></em>Login
+            </a>
+         </li>
+         <li class="visible-lg">
             <a href="#" toggle-fullscreen="toggle-fullscreen">
                <em class="fa fa-expand"></em>
             </a>
@@ -62,7 +68,6 @@
                <em class="fa fa-cog"></em>
              </a>
          </li>
-         <!-- END Alert menu-->
           <li>
             <a ng-show="user.loggedin == false" href="#" title="Register">
                <em class="fa fa-user"></em>

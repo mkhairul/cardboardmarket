@@ -1,10 +1,28 @@
 <div ng-show="processing" class="text-center loading-container">
     <h3>
-        <i class="fa fa-spinner fa-spin"></i>Processing
+        <i data-ng-hide="stopLoading" class="fa fa-spinner fa-spin"></i>{{loadingStatus}}
     </h3>
     <ul class="list-unstyled">
         <li ng-repeat="keyword in searchKeyword.data">
             {{keyword[0]}}
         </li>
     </ul>
+</div>
+
+<div ng-show="searchedPosts" id="box-container">
+    <div id="entry-listing" class="group">
+        <article ng-repeat="post in searchedPosts" id="post-215" class="post-215 category-people category-photography category-pretty-girls entry box format-image">
+            <div data-ng-click="onPostSelect(post)" class="entry-content-cnt">
+                <div class="entry-content" style="text-align:center">
+                    <a data-back-img="{{'http://www.gravatar.com/avatar/' + md5(post.email)}}" class="thumb" data-lightbox="fancybox[215]" title=""></a>
+                </div>
+            </div>
+            <div class="entry-desc">
+                <h1><a href="#" title="Permalink to {{post.title}}">{{post.title}}</a></h1>
+                <div class="entry-meta group">
+                    <a class="comments-no" href="#">4</a> <a data-post-id="215" class="heart-this loved" href="#" title="You love this."><span class="heart-no">7</span></a> <a class="entry-permalink" href="#" title="Permalink to High fashion model in autumn/winter clothes wearing sunglasses.">{{post.title}}</a>
+                </div>
+            </div>
+        </article>
+    </div>
 </div>

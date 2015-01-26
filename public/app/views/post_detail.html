@@ -1,26 +1,47 @@
 <div class="detail panel panel-default">
     <div class="panel-heading">
-        <div class="pull-right">
-            <button type="button" class="mr btn btn-labeled btn-info btn-sm" ng-click="help('post')">
+        <div data-ng-hide="close_confirm"  class="pull-right">
+            <button type="button" class="mr btn btn-sm btn-labeled btn-default ">
                 <span class="btn-label"><i class="fa fa-question"></i></span>Help
             </button>
+            <button data-ng-show="post.acl && post.status == 1" data-ng-click="close_confirm = true" type="button" class="mr btn btn-labeled btn-default btn-sm btn-danger" title="Close this post">
+                <span class="btn-label"><i class="fa fa-power-off"></i></span>Close Post
+            </button>
+            <button type="button" data-ng-click="report()" class="mr btn btn-sm btn-labeled btn-default btn-warning">
+                <span class="btn-label"><i class="fa fa-exclamation-triangle"></i></span>Report Abuse
+            </button>
         </div>
-        <div class="pull-right social-plugin">
-            <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>
-            <div class="fb-share-button" data-href="http://cardboardmarket.com" data-type="button_count"></div>
+        <div data-ng-show="close_confirm" class="pull-right">
+            <p class="no-margin"><strong>Closing post</strong></p>
+            <p>Are you sure?</p>
+            <button data-ng-click="closePost()" type="button" class="mr btn btn-labeled btn-sm btn-success">
+               <span class="btn-label"><i class="fa fa-check"></i></span>
+                Yes
+            </button>
+            <button data-ng-click="close_confirm = false" type="button" class="mr btn btn-labeled btn-sm btn-danger">
+               <span class="btn-label"><i class="fa fa-check"></i></span>
+                No
+            </button>
         </div>
-        <h1 class="post-title">{{post.title}}</h1>
+        <h1 class="post-title">
+            <span data-ng-show="(post.status == 2)">(closed)</span>
+            {{post.title}}
+        </h1>
         <small>{{post.email}}</small>
+        <div class="social-plugin">            
+            <fb:share-button href="{{path}}" layout="button_count"></fb:share-button>
+            <fb:like href="{{path}}" class="fb-like" layout="button_count" action="like" data-width="100%" show_faces="true" share="false"></fb:like>
+        </div>
     </div>
     <div class="panel-body">
         <p>{{post.content}}</p>
         <div class="table-responsive">
             <div id="wrapper">
                 <div id="columns">
-                    <div class="pin" data-ng-repeat="card in post.cards" title="{{card.name}}">
+                    <div class="pin" data-ng-init="cards = []" data-ng-repeat="card in post.cards" title="{{card.name}}">
                         <img data-ng-src="http://mtgimage.com/card/{{card.name}}.jpg" alt="" class="media-object img-responsive">
                         <h4 class="media-heading">{{card.name}}</h4>
-                        <div class="info">
+                        <div class="info" ng-init="cardDisplay(card)">
                             <div><strong>Quantity:</strong> {{card.quantity}}</div>
                             <div><strong>Price:</strong> {{money(card.price)}}</div>
                         </div>

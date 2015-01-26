@@ -2,8 +2,8 @@
 <div class="panel panel-default">
    <div class="panel-heading">Create Post</div>
    <div class="panel-body">
-      <div data-ng-init="activeStep = (activeStep) ? activeStep:1" class="wizard">
-         <ul class="steps-bar">
+      <div data-ng-init="activeStep = (activeStep != undefined) ? activeStep:1" class="wizard">
+         <ul data-ng-show="activeStep != 0" class="steps-bar">
             <li data-ng-class="{'active':activeStep&gt;=1}">
                <span ng-show="loggedIn == false">Create account</span>
                <span ng-show="loggedIn == true">Create account (SKIP)</span> 
@@ -34,7 +34,13 @@
                </div>
                <p data-ng-show="form_step1.confirm_match.$error.validator" class="text-danger">Password do not match!</p>
                <div class="mt">
-                  <button type="submit" data-ng-disabled="form_step1.$invalid" data-ng-click="activeStep=2" class="btn btn-primary">Next</button>
+                  <button type="submit" data-ng-disabled="form_step1.$invalid" data-ng-click="activeStep=2" class="btn btn-primary activeStep1-submit col-lg-2 col-md-2 col-sm-12">Next</button>
+                  <span class="or-separator col-lg-1 col-md-1 col-sm-12">OR</span>
+                  <div class="social-plugin activeStep1-fb-login col-lg-2 col-md-2 col-sm-12">
+                      <a data-ng-click="facebookLogin()" class="btn btn-block btn-social btn-facebook">
+                        <i class="fa fa-facebook"></i> Sign in with Facebook
+                      </a>
+                  </div>
                </div>
             </form>
          </div>
@@ -120,12 +126,12 @@
                                 </div>
                                 <div class="radio c-radio">
                                     <label>
-                                       <input ng-model="card.price_type" id="inlineradio1" type="radio" name="price_type" value="tcg">
+                                       <input data-ng-disabled="card.price_cf == 'N/A'"  ng-model="card.price_type" id="inlineradio1" type="radio" name="price_type" value="tcg">
                                        <span class="fa fa-circle"></span>TCG Player Price ({{(card.price_tcg) ? card.price_tcg:'retrieving'}})</label>
                                 </div>
                                 <div class="radio c-radio">
                                     <label>
-                                       <input ng-change="priceType(card)" ng-model="card.price_type" id="inlineradio1" type="radio" name="price_type" value="cf">
+                                       <input data-ng-disabled="card.price_cf == 'N/A'" ng-change="priceType(card)" ng-model="card.price_type" id="inlineradio1" type="radio" name="price_type" value="cf">
                                        <span class="fa fa-circle"></span>Channel Fireball Price ({{(card.price_cf) ? card.price_cf:'retrieving'}})</label>
                                 </div>
                                 <br/>
@@ -170,7 +176,7 @@
                       <div class="form-group">
                          <label class="col-sm-2 control-label">Email</label>
                          <div class="col-sm-6">
-                            <input type="text" ng-model="post.email" required="" masked="email" required="" class="form-control" value="{{post.email}}" placeholder="Your Email" />
+                            <input type="text" ng-model="post.email" required="" masked="email" required="" class="form-control" value="{{(post.email) ? post.email:Parse.User.current().get('email')}}" placeholder="Your Email" />
                          </div>
                       </div>
                 </fieldset>
@@ -183,6 +189,11 @@
                <button type="button" data-ng-disabled="form_step3.$invalid" data-ng-click="stepsDone=true && savePost()" class="btn btn-primary">Finish</button>
             </div>
          </div>
+      </div>
+      <div data-ng-show="savingPost" class="loadingContainer">
+             <h3>
+                <i data-ng-hide="stopLoading" class="fa fa-spinner fa-spin"></i> {{loadingStatus}}
+             </h3>
       </div>
    </div>
 </div>

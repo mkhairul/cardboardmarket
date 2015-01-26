@@ -2,6 +2,60 @@
    <!-- START dashboard content-->
    <div class="fw-boxed col-lg-12">
        <div class="row">
+          <div class="col-md-12 guides">
+              <div class="col-md-3">
+                  <div class="widget-box">
+                      <div class="widget-container">
+                          <div class="widget-heading"></div>
+                          <div class="widget-body">
+                              <span class="label font-montserrat fs-11">GUIDE</span>
+                              <h3>Let us guide you</h3>
+                          </div>
+                          <div class="widget-footer"></div>
+                          <div data-back-img="app/img/goblinguide.jpg" class="background"></div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="widget-box">
+                      <div class="widget-container">
+                          <div class="widget-heading"></div>
+                          <div class="widget-body">
+                              <span class="label font-montserrat fs-11">FAQ</span>
+                              <h3>to the other side</h3>
+                          </div>
+                          <div class="widget-footer"></div>
+                          <div data-back-img="app/img/treasurecruise.jpg" class="background"></div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="widget-box">
+                      <div class="widget-container">
+                          <div class="widget-heading"></div>
+                          <div class="widget-body">
+                              <span class="label font-montserrat fs-11">HELP</span>
+                              <h3>of the road and</h3>
+                          </div>
+                          <div class="widget-footer"></div>
+                          <div data-back-img="app/img/digthroughtime.jpg" class="background"></div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="widget-box">
+                      <div class="widget-container">
+                          <div class="widget-heading"></div>
+                          <div class="widget-body">
+                              <span class="label font-montserrat fs-11">GUIDE</span>
+                              <h3>into the light</h3>
+                          </div>
+                          <div class="widget-footer"></div>
+                          <div data-back-img="app/img/ugin.jpg" class="background"></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
           <div class="col-md-12 actions" data-ng-hide="loggedIn">
               <button type="button" class="mr mb-sm btn btn-primary btn-sm" ng-click="registerpage()">Sign-up</button>
               <button type="button" class="mr mb-sm btn btn-primary btn-sm" ng-click="loginpage()">Login</button>
@@ -11,7 +65,6 @@
           </div>
        </div>    
    </div>
-    
    <div ng-class="{'col-lg-9':sidebar, 'col-lg-12':!sidebar}" class="fw-boxed">
       <div class="row">        
         <div class="col-md-12 posts advancedSearch ng-hide animated fadeInLeft" ng-show="checked">
@@ -36,13 +89,13 @@
                 
                <div ng-hide="posts" class="text-center loading-container">
                    <h3>
-                        <i class="fa fa-spinner fa-spin"></i>Loading
+                        <i data-ng-hide="stopLoading" class="fa fa-spinner fa-spin"></i>{{loadingStatus}}
                    </h3>
                    <br/>
                </div>
                <!-- List group -->
                <ul class="list-group">
-                  <li id="{{post.id}}" ng-repeat="post in posts" class="list-group-item" ng-click="onPostSelect(post)" on-finish-render="" title="{{(post.verify==1) ? 'Verified':'Unverified'}} User Post">
+                  <li id="{{post.id}}" ng-repeat="post in posts" ng-class="{closed:(post.status == 2)}" class="list-group-item" ng-click="onPostSelect(post)" on-finish-render="" title="{{(post.verify==1) ? 'Verified':'Unverified'}} User Post">
                      <div class="media">
                         <div class="pull-left">
                            <!-- Contact avatar-->
@@ -63,7 +116,11 @@
                         <div class="media-body">
                            <div class="media-heading">
                               <p class="post-title mb-sm">
-                                 <strong><a href="#" class="text-inverse">{{post.title}}</a>
+                                 <strong>
+                                     <a href="#" class="text-inverse">
+                                         <span data-ng-show="(post.status == 2)">(closed)</span>
+                                         {{post.title}}
+                                     </a>
                                  </strong>-
                                  <em class="text-muted">{{post.email}}</em>
                               </p>
@@ -92,28 +149,11 @@
                   <li class="list-group-item">
                      <div class="media">
                         <a href="#" class="media-left media-middle text-muted">
-                           <em class="fa fa-cloud-upload fa-2x"></em>
+                           <em class="fa fa-lightbulb-o fa-2x"></em>
                         </a>
                         <div class="media-body">
-                           <p class="media-heading text-bold">wonderful-sunday.png</p>
-                           <p>10 of 300MB - 10MB/s</p>
-                           <progressbar value="32" type="warning" class="progress-xs"></progressbar>
-                        </div>
-                     </div>
-                  </li>
-                  <li class="list-group-item">
-                     <div class="media">
-                        <a href="#" class="media-left media-middle text-muted">
-                           <em class="fa fa-check fa-2x text-success"></em>
-                        </a>
-                        <div class="media-body">
-                           <p class="media-heading text-bold">Angular-directives-complete-set.zip</p>
-                           <p>500k of 500k -
-                              <a href="#">
-                                 <em class="text-primary fa fa-dropbox"></em>
-                              </a>
-                           </p>
-                           <progressbar value="100" type="success" class="progress-xs"></progressbar>
+                           <p class="media-heading text-bold">Beta launch!</p>
+                           <p>Still more to come!</p>
                         </div>
                      </div>
                   </li>
