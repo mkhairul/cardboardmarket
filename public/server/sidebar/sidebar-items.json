@@ -8,8 +8,7 @@
     "text": "Dashboard",
     "sref": "app.dashboard",
     "icon": "icon-bar-graph",
-    "translate": "sidebar.nav.DASHBOARD",
-    "alert": {"text":"3", "class": "label-info"}
+    "translate": "sidebar.nav.DASHBOARD"
   },
   {
     "text": "Create Post",
